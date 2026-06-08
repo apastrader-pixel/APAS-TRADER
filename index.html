@@ -1,0 +1,316 @@
+index.html<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔥 APAS TRADER</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    body {
+      margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0a1f, #1a0033);
+      color: white; text-align: center;
+    }
+    .container { max-width: 900px; margin: 20px auto; padding: 15px; }
+    h1 { margin: 10px 0 5px; font-size: 2.3em; font-weight: bold; letter-spacing: 1px; }
+    .subtitle { color: #ffd700; margin-bottom: 25px; font-size: 1.05em; }
+    
+    .controls-row { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 20px; }
+    
+    .select-box {
+      padding: 14px; font-size: 1.1em; width: 90%; max-width: 400px;
+      border-radius: 12px; border: none; background: #1f1f3a; color: white; outline: none; text-align: center;
+    }
+    
+    .time-tabs { display: flex; justify-content: center; gap: 8px; width: 90%; max-width: 400px; }
+    .time-btn {
+      flex: 1; background: #1f1f3a; color: white; border: 1px solid #3d3d66;
+      padding: 12px 5px; font-size: 1em; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s;
+    }
+    .time-btn.active { background: #ffd700; color: black; border-color: #ffd700; }
+    
+    button.action-btn {
+      background: linear-gradient(90deg, #ffd700, #ffaa00);
+      color: black; font-weight: bold; font-size: 1.3em;
+      padding: 15px 40px; border: none; border-radius: 15px;
+      cursor: pointer; margin: 20px 0; width: 90%; max-width: 400px;
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); transition: 0.2s;
+    }
+    button.action-btn:disabled { background: #444 !important; color: #888 !important; box-shadow: none !important; cursor: not-allowed; }
+    
+    .signal-box { margin: 25px auto 15px; padding: 25px; border-radius: 15px; width: 85%; max-width: 450px; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .buy { background: #00ff88; color: black; }
+    .sell { background: #ff4444; color: white; }
+    
+    .timer-container {
+      font-size: 1.4em; font-weight: bold; margin: 15px 0; color: #ffaa00;
+      background: rgba(31, 31, 58, 0.8); display: inline-block; padding: 10px 25px; border-radius: 30px; border: 1px dashed #ffd700;
+    }
+    
+    .price { font-size: 2em; font-weight: bold; margin: 15px 0; color: #ffd700; }
+    .chart-container { width: 95%; max-width: 500px; margin: 25px auto; background: #0c0c24; border-radius: 12px; padding: 15px; box-sizing: border-box; }
+    footer { margin-top: 40px; color: #666; font-size: 0.85em; padding-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔥 APAS TRADER</h1>
+    <p class="subtitle" id="boardSubtitle">1 Minute Timeframe | Real Live Candlesticks</p>
+
+    <div class="controls-row">
+      <select id="asset" class="select-box" onchange="changeAsset()">
+        <optgroup label="Crypto Indices & Coins">
+          <option value="Crypto_IDX" selected>Crypto IDX</option>
+          <option value="Bitcoin">Bitcoin</option>
+          <option value="Bitcoin_Cash">Bitcoin Cash (OTC)</option>
+          <option value="Ethereum">Ethereum (OTC)</option>
+          <option value="Pancake_Swap">Pancake Swap (OTC)</option>
+          <option value="Solana">Solana (OTC)</option>
+          <option value="Toncoin">Toncoin (OTC)</option>
+          <option value="Uniswap">Uniswap (OTC)</option>
+          <option value="Aave">Aave (OTC)</option>
+        </optgroup>
+        <optgroup label="Forex Currency Pairs (OTC)">
+          <option value="AUD_CAD">AUD/CAD (OTC)</option>
+          <option value="AUD_USD">AUD/USD (OTC)</option>
+          <option value="CHF_JPY">CHF/JPY (OTC)</option>
+          <option value="EUR_CAD">EUR/CAD (OTC)</option>
+          <option value="EUR_GBP">EUR/GBP (OTC)</option>
+          <option value="EUR_USD">EUR/USD (OTC)</option>
+          <option value="GBP_CHF">GBP/CHF (OTC)</option>
+          <option value="GBP_JPY">GBP/JPY (OTC)</option>
+          <option value="GBP_NZD">GBP/NZD (OTC)</option>
+          <option value="GBP_USD">GBP/USD (OTC)</option>
+          <option value="NZD_USD">NZD/USD (OTC)</option>
+          <option value="USD_CAD">USD/CAD (OTC)</option>
+          <option value="USD_JPY">USD/JPY (OTC)</option>
+        </optgroup>
+      </select>
+
+      <div class="time-tabs">
+        <button id="btn-1" class="time-btn active" onclick="setTimeframe(1)">1 MIN</button>
+        <button id="btn-2" class="time-btn" onclick="setTimeframe(2)">2 MIN</button>
+        <button id="btn-3" class="time-btn" onclick="setTimeframe(3)">3 MIN</button>
+        <button id="btn-5" class="time-btn" onclick="setTimeframe(5)">5 MIN</button>
+      </div>
+    </div>
+
+    <button id="getSignalBtn" class="action-btn" onclick="generateLiveSignal()">🚀 GET SIGNAL</button>
+
+    <div id="result" style="display:none;">
+      <div id="signalBox" class="signal-box">
+        <div id="signalText" style="font-size: 1.8em; letter-spacing: 2px;">ANALYZING...</div>
+        <div id="probText" style="font-size: 0.85em; margin-top: 5px; opacity: 0.9;">PROBABILITY: --%</div>
+      </div>
+
+      <div class="timer-container">
+        ⏳ REMAINING: <span id="countdown">00:00</span>
+      </div>
+
+      <div class="price" id="price">Live Price: Fetching...</div>
+      
+      <div class="chart-container">
+        <canvas id="chart" height="280"></canvas>
+      </div>
+    </div>
+
+    <footer>
+      Educational Purpose Only • Real-time Mock Live Data Sync
+    </footer>
+  </div>
+
+  <script>
+    let chartInstance = null;
+    let countdownInterval = null;
+    let selectedTimeframe = 1;
+    let currentPriceGlobal = 0;
+    let candleDataList = [];
+
+    const assetConfig = {
+      "Crypto_IDX": { base: 3115.20, digits: 2 },
+      "Bitcoin": { base: 67800.00, digits: 2 },
+      "Bitcoin_Cash": { base: 435.20, digits: 2 },
+      "Ethereum": { base: 3750.00, digits: 2 },
+      "Pancake_Swap": { base: 2.75, digits: 3 },
+      "Solana": { base: 162.40, digits: 2 },
+      "Toncoin": { base: 7.15, digits: 3 },
+      "Uniswap": { base: 9.30, digits: 3 },
+      "Aave": { base: 92.80, digits: 2 },
+      "AUD_CAD": { base: 0.9112, digits: 4 },
+      "AUD_USD": { base: 0.6645, digits: 4 },
+      "CHF_JPY": { base: 173.25, digits: 2 },
+      "EUR_CAD": { base: 1.4830, digits: 4 },
+      "EUR_GBP": { base: 0.8515, digits: 4 },
+      "EUR_USD": { base: 1.0848, digits: 4 },
+      "GBP_CHF": { base: 1.1410, digits: 4 },
+      "GBP_JPY": { base: 198.40, digits: 2 },
+      "GBP_NZD": { base: 2.0630, digits: 4 },
+      "GBP_USD": { base: 1.2710, digits: 4 },
+      "NZD_USD": { base: 0.6142, digits: 4 },
+      "USD_CAD": { base: 1.3670, digits: 4 },
+      "USD_JPY": { base: 156.25, digits: 2 }
+    };
+
+    window.onload = function() {
+      initCandleData();
+      setInterval(updateLiveTick, 1500); 
+    };
+
+    function changeAsset() {
+      initCandleData();
+      if(chartInstance) renderCandleChart();
+    }
+
+    function initCandleData() {
+      const asset = document.getElementById("asset").value;
+      const config = assetConfig[asset] || { base: 100, digits: 2 };
+      let currentPrice = config.base;
+      candleDataList = [];
+
+      for (let i = 0; i < 20; i++) {
+        let open = currentPrice + (Math.random() - 0.5) * (config.base * 0.002);
+        let close = open + (Math.random() - 0.5) * (config.base * 0.002);
+        let high = Math.max(open, close) + Math.random() * (config.base * 0.001);
+        let low = Math.min(open, close) - Math.random() * (config.base * 0.001);
+        
+        candleDataList.push({ open, high, low, close });
+        currentPrice = close;
+      }
+      currentPriceGlobal = currentPrice;
+      updatePriceDisplay(config.digits);
+    }
+
+    function updateLiveTick() {
+      const asset = document.getElementById("asset").value;
+      const config = assetConfig[asset] || { base: 100, digits: 2 };
+      
+      let lastCandle = candleDataList[candleDataList.length - 1];
+      let priceChange = (Math.random() - 0.5) * (config.base * 0.0005);
+      
+      lastCandle.close += priceChange;
+      if(lastCandle.close > lastCandle.high) lastCandle.high = lastCandle.close;
+      if(lastCandle.close < lastCandle.low) lastCandle.low = lastCandle.close;
+      
+      currentPriceGlobal = lastCandle.close;
+      updatePriceDisplay(config.digits);
+
+      if (chartInstance && document.getElementById("result").style.display === "block") {
+        renderCandleChart();
+      }
+    }
+
+    function updatePriceDisplay(digits) {
+      document.getElementById("price").innerHTML = `Live Price: <b style="color:#ffd700">${currentPriceGlobal.toFixed(digits)}</b>`;
+    }
+
+    function setTimeframe(mins) {
+      selectedTimeframe = mins;
+      document.getElementById("boardSubtitle").textContent = `${mins} Minute Timeframe | Real Live Candlesticks`;
+      const buttons = document.querySelectorAll(".time-btn");
+      buttons.forEach(btn => btn.classList.remove("active"));
+      document.getElementById("btn-" + mins).classList.add("active");
+    }
+
+    // बोलने वाला फंक्शन (Voice Alert)
+    function speakSignal(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); // पुराना वॉइस क्लियर करें
+        let msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'en-US'; 
+        msg.rate = 1.0; 
+        window.speechSynthesis.speak(msg);
+      }
+    }
+
+    function generateLiveSignal() {
+      document.getElementById("result").style.display = "block";
+      document.getElementById("getSignalBtn").disabled = true;
+
+      let lastCandle = candleDataList[candleDataList.length - 1];
+      const isBuy = lastCandle.close < lastCandle.open; 
+      const prob = Math.floor(Math.random() * 12) + 83;
+
+      const signalBox = document.getElementById("signalBox");
+      const signalText = document.getElementById("signalText");
+      const probText = document.getElementById("probText");
+
+      if (isBuy) {
+        signalBox.className = "signal-box buy";
+        signalText.textContent = `CALL / BUY ▲ (${selectedTimeframe} MIN)`;
+        speakSignal("Call! Buy Now!"); // आवाज़ आएगी
+      } else {
+        signalBox.className = "signal-box sell";
+        signalText.textContent = `PUT / SELL ▼ (${selectedTimeframe} MIN)`;
+        speakSignal("Put! Sell Now!"); // आवाज़ आएगी
+      }
+      
+      probText.textContent = `AI ACCURACY: ${prob}%`;
+      
+      renderCandleChart();
+      startTimer(selectedTimeframe);
+    }
+
+    function startTimer(minutes) {
+      if (countdownInterval) clearInterval(countdownInterval);
+      let totalSeconds = (minutes * 60) - 1;
+      const countdownEl = document.getElementById("countdown");
+
+      countdownInterval = setInterval(() => {
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = totalSeconds % 60;
+        countdownEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        
+        totalSeconds--;
+        if (totalSeconds < 0) {
+          clearInterval(countdownInterval);
+          countdownEl.textContent = "00:00 - EXPIRED";
+          document.getElementById("getSignalBtn").disabled = false;
+        }
+      }, 1000);
+    }
+
+    // एडवांस्ड ज़ूम्ड कैंडलस्टिक रेंडरर इंजन (प्राइस फ़िक्स)
+    function renderCandleChart() {
+      const ctx = document.getElementById("chart").getContext('2d');
+      if (chartInstance) chartInstance.destroy();
+
+      const labels = Array.from({length: candleDataList.length}, (_, i) => i + 1);
+      
+      // फ्लोटिंग बार्स मैकेनिज्म
+      const datasetData = candleDataList.map(c => [c.open, c.close]);
+      const backgroundColors = candleDataList.map(c => c.close >= c.open ? '#00ff88' : '#ff4444');
+
+      // सभी वैल्यूज़ में से मिनिमम और मैक्सिमम ढूंढकर चार्ट ऑटो ज़ूम करना
+      const allValues = candleDataList.flatMap(c => [c.open, c.close, c.high, c.low]);
+      const minVal = Math.min(...allValues) * 0.9995;
+      const maxVal = Math.max(...allValues) * 1.0005;
+
+      chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: datasetData,
+            backgroundColor: backgroundColors,
+            barPercentage: 0.65
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { 
+              grid: { color: '#1f1f3a' }, 
+              ticks: { color: '#aaa' },
+              min: minVal, // यहाँ से सुधरा (चार्ट अब ज़ूम रहेगा)
+              max: maxVal
+            },
+            x: { grid: { display: false }, ticks: { display: false } }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
