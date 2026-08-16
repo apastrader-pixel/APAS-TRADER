@@ -1,316 +1,2181 @@
-index.html<!DOCTYPE html>
-<html lang="hi">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🔥 APAS TRADER</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <style>
-    body {
-      margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0a0a1f, #1a0033);
-      color: white; text-align: center;
-    }
-    .container { max-width: 900px; margin: 20px auto; padding: 15px; }
-    h1 { margin: 10px 0 5px; font-size: 2.3em; font-weight: bold; letter-spacing: 1px; }
-    .subtitle { color: #ffd700; margin-bottom: 25px; font-size: 1.05em; }
-    
-    .controls-row { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 20px; }
-    
-    .select-box {
-      padding: 14px; font-size: 1.1em; width: 90%; max-width: 400px;
-      border-radius: 12px; border: none; background: #1f1f3a; color: white; outline: none; text-align: center;
-    }
-    
-    .time-tabs { display: flex; justify-content: center; gap: 8px; width: 90%; max-width: 400px; }
-    .time-btn {
-      flex: 1; background: #1f1f3a; color: white; border: 1px solid #3d3d66;
-      padding: 12px 5px; font-size: 1em; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s;
-    }
-    .time-btn.active { background: #ffd700; color: black; border-color: #ffd700; }
-    
-    button.action-btn {
-      background: linear-gradient(90deg, #ffd700, #ffaa00);
-      color: black; font-weight: bold; font-size: 1.3em;
-      padding: 15px 40px; border: none; border-radius: 15px;
-      cursor: pointer; margin: 20px 0; width: 90%; max-width: 400px;
-      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); transition: 0.2s;
-    }
-    button.action-btn:disabled { background: #444 !important; color: #888 !important; box-shadow: none !important; cursor: not-allowed; }
-    
-    .signal-box { margin: 25px auto 15px; padding: 25px; border-radius: 15px; width: 85%; max-width: 450px; font-weight: bold; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .buy { background: #00ff88; color: black; }
-    .sell { background: #ff4444; color: white; }
-    
-    .timer-container {
-      font-size: 1.4em; font-weight: bold; margin: 15px 0; color: #ffaa00;
-      background: rgba(31, 31, 58, 0.8); display: inline-block; padding: 10px 25px; border-radius: 30px; border: 1px dashed #ffd700;
-    }
-    
-    .price { font-size: 2em; font-weight: bold; margin: 15px 0; color: #ffd700; }
-    .chart-container { width: 95%; max-width: 500px; margin: 25px auto; background: #0c0c24; border-radius: 12px; padding: 15px; box-sizing: border-box; }
-    footer { margin-top: 40px; color: #666; font-size: 0.85em; padding-bottom: 20px; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>SP Classes - Learn Anytime</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        :root {
+            --primary: #6C3CE1;
+            --primary-light: #8B5CF6;
+            --primary-dark: #5B2FC9;
+            --primary-bg: #F0EBFF;
+            --bg: #F8F9FC;
+            --card: #FFFFFF;
+            --text: #1A1A2E;
+            --text-secondary: #555770;
+            --text-light: #8E8EA0;
+            --border: #E8E8F0;
+            --shadow: 0 8px 30px rgba(108, 60, 225, 0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient: linear-gradient(135deg, #6C3CE1, #A855F7);
+            --navbar-bg: #FFFFFF;
+            --tab-icon: #8E8EA0;
+            --tab-active: #6C3CE1;
+            --progress-bg: #E8E8F0;
+            --progress-fill: #6C3CE1;
+            --modal-overlay: rgba(0, 0, 0, 0.7);
+            --video-card-bg: #F5F5FA;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+        }
+        [data-theme="dark"] {
+            --bg: #0F0F1A;
+            --card: #1A1A2E;
+            --text: #F1F1F6;
+            --text-secondary: #B0B0C8;
+            --text-light: #6E6E8A;
+            --border: #2A2A44;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            --navbar-bg: #1A1A2E;
+            --tab-icon: #6E6E8A;
+            --tab-active: #A855F7;
+            --progress-bg: #2A2A44;
+            --progress-fill: #A855F7;
+            --primary-bg: #1A1A2E;
+            --video-card-bg: #1E1E32;
+            --modal-overlay: rgba(0, 0, 0, 0.85);
+        }
+        html,
+        body {
+            height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            transition: background var(--transition), color var(--transition);
+            overflow: hidden;
+        }
+        #app {
+            max-width: 430px;
+            width: 100%;
+            height: 100vh;
+            margin: 0 auto;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ===== STATUS BAR ===== */
+        .status-bar {
+            padding: 6px 20px 2px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: var(--bg);
+            flex-shrink: 0;
+            letter-spacing: 0.3px;
+        }
+
+        /* ===== HEADER ===== */
+        .app-header {
+            padding: 10px 16px 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            background: var(--bg);
+            transition: background var(--transition);
+            border-bottom: 1px solid var(--border);
+        }
+        .app-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .app-header .logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(108, 60, 225, 0.3);
+        }
+        .app-header .logo h1 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
+        .app-header .logo h1 span {
+            color: var(--primary);
+        }
+        .app-header .logo small {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            display: block;
+            margin-top: -2px;
+        }
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .header-actions button {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            transition: var(--transition);
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-actions button:hover {
+            background: var(--primary-bg);
+            color: var(--primary);
+        }
+        .lang-toggle {
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--primary-bg);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            width: auto;
+            height: auto;
+        }
+        .lang-toggle:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+        .back-btn {
+            font-size: 20px !important;
+            color: var(--text) !important;
+            width: 34px;
+            height: 34px;
+        }
+        .back-btn:hover {
+            background: var(--primary-bg) !important;
+            color: var(--primary) !important;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 16px 80px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .main-content::-webkit-scrollbar {
+            width: 3px;
+        }
+        .main-content::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+
+        /* ===== PAGES ===== */
+        .page {
+            display: none;
+            animation: fadeSlideUp 0.4s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin: 18px 0 12px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .section-title .see-all {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* ===== SLIDER ===== */
+        .slider-container {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin: 8px 0 16px;
+            box-shadow: var(--shadow);
+            background: var(--card);
+            border: 1px solid var(--border);
+            height: 200px;
+        }
+        .slider-track {
+            display: flex;
+            transition: transform 0.6s ease;
+            height: 100%;
+        }
+        .slider-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            flex-shrink: 0;
+            background: var(--gradient-card);
+        }
+        .slider-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .slider-slide .slide-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: #fff;
+        }
+        .slider-slide .slide-overlay .line1 {
+            font-size: 16px;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+        .slider-slide .slide-overlay .line2 {
+            font-size: 13px;
+            font-weight: 400;
+            opacity: 0.9;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            right: 16px;
+            display: flex;
+            gap: 6px;
+            z-index: 5;
+        }
+        .slider-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .slider-dots .dot.active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+
+        /* ===== FEATURE GRID ===== */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 6px 0 4px;
+        }
+        .feature-item {
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            padding: 12px 4px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+        .feature-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(108, 60, 225, 0.15);
+        }
+        .feature-item .fi-icon {
+            width: 38px;
+            height: 38px;
+            margin: 0 auto 4px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #fff;
+        }
+        .feature-item .fi-icon.purple {
+            background: var(--gradient);
+        }
+        .feature-item .fi-icon.blue {
+            background: linear-gradient(135deg, #3B82F6, #60A5FA);
+        }
+        .feature-item .fi-icon.green {
+            background: linear-gradient(135deg, #10B981, #34D399);
+        }
+        .feature-item .fi-icon.orange {
+            background: linear-gradient(135deg, #F59E0B, #FBBF24);
+        }
+        .feature-item .fi-icon.pink {
+            background: linear-gradient(135deg, #EC4899, #F472B6);
+        }
+        .feature-item .fi-icon.cyan {
+            background: linear-gradient(135deg, #06B6D4, #22D3EE);
+        }
+        .feature-item .fi-icon.red {
+            background: linear-gradient(135deg, #EF4444, #F87171);
+        }
+        .feature-item .fi-icon.indigo {
+            background: linear-gradient(135deg, #6366F1, #818CF8);
+        }
+        .feature-item .fi-icon.teal {
+            background: linear-gradient(135deg, #14B8A6, #2DD4BF);
+        }
+        .feature-item .fi-icon.rose {
+            background: linear-gradient(135deg, #F43F5E, #FB7185);
+        }
+        .feature-item .fi-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            line-height: 1.2;
+        }
+
+        /* ===== LOCKED OVERLAY ===== */
+        .locked-overlay {
+            position: relative;
+        }
+        .locked-overlay .lock-banner {
+            background: var(--warning);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .locked-content {
+            opacity: 0.5;
+            pointer-events: none;
+            filter: blur(2px);
+            user-select: none;
+        }
+
+        /* ===== VIDEO GRID ===== */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 6px;
+        }
+        .video-card {
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .video-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(108, 60, 225, 0.15);
+        }
+        .video-card .thumbnail {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: var(--video-card-bg);
+            overflow: hidden;
+        }
+        .video-card .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .video-card .thumbnail .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.6);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            backdrop-filter: blur(4px);
+            transition: var(--transition);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .video-card:hover .thumbnail .play-btn {
+            background: var(--primary);
+            transform: translate(-50%, -50%) scale(1.05);
+            border-color: var(--primary-light);
+        }
+        .video-card .video-info {
+            padding: 8px 10px 10px;
+        }
+        .video-card .video-info h4 {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .video-card .video-info .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+            font-size: 10px;
+            color: var(--text-light);
+        }
+        .video-card .video-info .meta .duration {
+            background: var(--primary-bg);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* ===== VIDEO MODAL ===== */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--modal-overlay);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        .video-modal.open {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .video-modal .modal-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            max-width: 720px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(40px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .video-modal .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            background: var(--card);
+        }
+        .video-modal .modal-header h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 80%;
+        }
+        .video-modal .modal-header .close-btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0 8px;
+            transition: var(--transition);
+        }
+        .video-modal .modal-header .close-btn:hover {
+            color: #EF4444;
+            transform: rotate(90deg);
+        }
+        .video-modal .modal-body {
+            padding: 0;
+            background: #000;
+            aspect-ratio: 16/9;
+            width: 100%;
+        }
+        .video-modal .modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* ===== COURSE CARDS ===== */
+        .course-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .course-card:hover {
+            transform: translateX(4px);
+            border-color: var(--primary-light);
+        }
+        .course-card .cc-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--gradient-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--primary);
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+        }
+        .course-card .cc-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .course-card .cc-info h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .course-card .cc-info p {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 1px;
+        }
+        .course-card .cc-progress {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .course-card .cc-progress .bar {
+            width: 50px;
+            height: 4px;
+            background: var(--progress-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .course-card .cc-progress .bar .fill {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--progress-fill);
+            transition: width 0.8s ease;
+        }
+        .course-card .cc-progress .percent {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 32px;
+            text-align: right;
+        }
+        .course-card .cc-progress .lectures {
+            font-size: 10px;
+            color: var(--text-light);
+            min-width: 50px;
+            text-align: right;
+        }
+
+        /* ===== AUTH PAGES ===== */
+        .auth-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            padding: 20px 0;
+        }
+        .auth-page .auth-box {
+            width: 100%;
+            max-width: 360px;
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 28px 22px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .auth-page .auth-box .auth-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .auth-page .auth-box .auth-logo img {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            object-fit: cover;
+            box-shadow: 0 4px 16px rgba(108, 60, 225, 0.3);
+        }
+        .auth-page .auth-box .auth-logo h2 {
+            margin-top: 8px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text);
+        }
+        .auth-page .auth-box .auth-logo p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .auth-page .form-group {
+            margin-bottom: 14px;
+        }
+        .auth-page .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        .auth-page .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 14px;
+            transition: var(--transition);
+            outline: none;
+        }
+        .auth-page .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 60, 225, 0.15);
+        }
+        .auth-page .btn-auth {
+            width: 100%;
+            padding: 12px;
+            background: var(--gradient);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 6px;
+        }
+        .auth-page .btn-auth:hover {
+            transform: scale(0.98);
+            box-shadow: 0 8px 24px rgba(108, 60, 225, 0.35);
+        }
+        .auth-page .auth-switch {
+            text-align: center;
+            margin-top: 14px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .auth-page .auth-switch a {
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .auth-page .auth-switch a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== PAYMENT PAGE ===== */
+        .payment-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+            margin: 12px 0;
+        }
+        .payment-box .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 12px auto;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 2px solid var(--border);
+            background: #fff;
+        }
+        .payment-box .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .payment-box .amount {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 8px 0;
+        }
+        .payment-box .address {
+            font-size: 12px;
+            color: var(--text-secondary);
+            word-break: break-all;
+            background: var(--bg);
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            margin: 8px 0;
+        }
+        .payment-box .status-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin: 8px 0;
+        }
+        .payment-box .status-badge.pending {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        .payment-box .status-badge.approved {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        .payment-box .status-badge.rejected {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        /* ===== ADMIN PANEL ===== */
+        .admin-page .admin-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 8px 0 16px;
+        }
+        .admin-page .admin-stats .stat-card {
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        .admin-page .admin-stats .stat-card .num {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .admin-page .admin-stats .stat-card .label {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        .admin-payment-item {
+            background: var(--card);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .admin-payment-item .info {
+            flex: 1;
+            min-width: 120px;
+        }
+        .admin-payment-item .info .name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text);
+        }
+        .admin-payment-item .info .email {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .admin-payment-item .info .status {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-top: 2px;
+        }
+        .admin-payment-item .info .status.pending {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        .admin-payment-item .info .status.approved {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        .admin-payment-item .info .status.rejected {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+        .admin-payment-item .actions {
+            display: flex;
+            gap: 6px;
+        }
+        .admin-payment-item .actions button {
+            padding: 4px 12px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .admin-payment-item .actions .approve {
+            background: var(--success);
+            color: #fff;
+        }
+        .admin-payment-item .actions .reject {
+            background: var(--danger);
+            color: #fff;
+        }
+        .admin-payment-item .actions button:hover {
+            transform: scale(0.95);
+        }
+
+        /* ===== AI GUIDE ===== */
+        .ai-guide-box {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .ai-guide-box .ai-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .ai-guide-box .ai-text {
+            flex: 1;
+        }
+        .ai-guide-box .ai-text .name {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .ai-guide-box .ai-text .name .badge {
+            font-size: 9px;
+            background: var(--primary);
+            color: #fff;
+            padding: 1px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .ai-guide-box .ai-text .message {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .ai-guide-box .ai-voice-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary-bg);
+            color: var(--primary);
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ai-guide-box .ai-voice-btn.active {
+            background: var(--primary);
+            color: #fff;
+            animation: pulse-voice 1.5s infinite;
+        }
+        @keyframes pulse-voice {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(108, 60, 225, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 12px rgba(108, 60, 225, 0);
+            }
+        }
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--navbar-bg);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding: 6px 0 env(safe-area-inset-bottom, 6px) 0;
+            flex-shrink: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border: none;
+            background: none;
+            color: var(--tab-icon);
+            transition: var(--transition);
+            position: relative;
+            min-width: 44px;
+        }
+        .bottom-nav .nav-item i {
+            font-size: 20px;
+            transition: var(--transition);
+        }
+        .bottom-nav .nav-item span {
+            font-size: 9px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .bottom-nav .nav-item.active {
+            color: var(--tab-active);
+        }
+        .bottom-nav .nav-item.active i {
+            transform: translateY(-2px);
+        }
+        .bottom-nav .nav-item .nav-badge {
+            position: absolute;
+            top: 0;
+            right: 2px;
+            background: #EF4444;
+            color: #fff;
+            font-size: 8px;
+            font-weight: 700;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--text);
+            color: var(--bg);
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 13px;
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+            z-index: 999;
+            max-width: 90%;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 430px) {
+            .feature-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+            .feature-item {
+                padding: 8px 2px;
+            }
+            .feature-item .fi-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 13px;
+            }
+            .feature-item .fi-label {
+                font-size: 9px;
+            }
+            .video-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .slider-container {
+                height: 160px;
+            }
+            .slider-slide .slide-overlay .line1 {
+                font-size: 14px;
+            }
+            .slider-slide .slide-overlay .line2 {
+                font-size: 11px;
+            }
+            .app-header .logo h1 {
+                font-size: 15px;
+            }
+            .app-header .logo img {
+                width: 30px;
+                height: 30px;
+            }
+            .auth-page .auth-box {
+                padding: 20px 16px;
+            }
+            .admin-page .admin-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+        }
+        @media (max-width: 360px) {
+            .feature-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .video-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .main-content {
+            scrollbar-width: thin;
+        }
+
+        /* ===== MISC ===== */
+        .text-center {
+            text-align: center;
+        }
+        .mt-8 {
+            margin-top: 8px;
+        }
+        .mt-16 {
+            margin-top: 16px;
+        }
+        .mb-8 {
+            margin-bottom: 8px;
+        }
+        .gap-8 {
+            gap: 8px;
+        }
+        .flex {
+            display: flex;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .w-full {
+            width: 100%;
+        }
+
+        /* Admin Tabs */
+        .admin-tabs {
+            display: flex;
+            gap: 6px;
+            margin: 8px 0 12px;
+            flex-wrap: wrap;
+        }
+        .admin-tabs button {
+            padding: 6px 16px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--card);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .admin-tabs button.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .admin-tabs button:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Scrollable admin list */
+        .admin-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .admin-list::-webkit-scrollbar {
+            width: 3px;
+        }
+        .admin-list::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🔥 APAS TRADER</h1>
-    <p class="subtitle" id="boardSubtitle">1 Minute Timeframe | Real Live Candlesticks</p>
 
-    <div class="controls-row">
-      <select id="asset" class="select-box" onchange="changeAsset()">
-        <optgroup label="Crypto Indices & Coins">
-          <option value="Crypto_IDX" selected>Crypto IDX</option>
-          <option value="Bitcoin">Bitcoin</option>
-          <option value="Bitcoin_Cash">Bitcoin Cash (OTC)</option>
-          <option value="Ethereum">Ethereum (OTC)</option>
-          <option value="Pancake_Swap">Pancake Swap (OTC)</option>
-          <option value="Solana">Solana (OTC)</option>
-          <option value="Toncoin">Toncoin (OTC)</option>
-          <option value="Uniswap">Uniswap (OTC)</option>
-          <option value="Aave">Aave (OTC)</option>
-        </optgroup>
-        <optgroup label="Forex Currency Pairs (OTC)">
-          <option value="AUD_CAD">AUD/CAD (OTC)</option>
-          <option value="AUD_USD">AUD/USD (OTC)</option>
-          <option value="CHF_JPY">CHF/JPY (OTC)</option>
-          <option value="EUR_CAD">EUR/CAD (OTC)</option>
-          <option value="EUR_GBP">EUR/GBP (OTC)</option>
-          <option value="EUR_USD">EUR/USD (OTC)</option>
-          <option value="GBP_CHF">GBP/CHF (OTC)</option>
-          <option value="GBP_JPY">GBP/JPY (OTC)</option>
-          <option value="GBP_NZD">GBP/NZD (OTC)</option>
-          <option value="GBP_USD">GBP/USD (OTC)</option>
-          <option value="NZD_USD">NZD/USD (OTC)</option>
-          <option value="USD_CAD">USD/CAD (OTC)</option>
-          <option value="USD_JPY">USD/JPY (OTC)</option>
-        </optgroup>
-      </select>
+    <div id="app">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span id="statusTime">9:41</span>
+            <span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-three-quarters"></i></span>
+        </div>
 
-      <div class="time-tabs">
-        <button id="btn-1" class="time-btn active" onclick="setTimeframe(1)">1 MIN</button>
-        <button id="btn-2" class="time-btn" onclick="setTimeframe(2)">2 MIN</button>
-        <button id="btn-3" class="time-btn" onclick="setTimeframe(3)">3 MIN</button>
-        <button id="btn-5" class="time-btn" onclick="setTimeframe(5)">5 MIN</button>
-      </div>
+        <!-- Header -->
+        <header class="app-header" id="appHeader">
+            <div class="logo">
+                <img src="https://i.postimg.cc/HkyGg7v8/file-0000000033ac8208bfb3de45949cc4c1.png" alt="SP Classes Logo" />
+                <div>
+                    <h1>SP <span>Classes</span></h1>
+                    <small>Learn Anytime, Anywhere</small>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="lang-toggle" id="langToggle">हिंदी</button>
+                <button id="notifBtn"><i class="fas fa-bell"></i></button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+
+            <!-- ===== PAGE: REGISTER ===== -->
+            <div class="page active" id="pageRegister">
+                <div class="auth-page">
+                    <div class="auth-box">
+                        <div class="auth-logo">
+                            <img src="https://i.postimg.cc/HkyGg7v8/file-0000000033ac8208bfb3de45949cc4c1.png" alt="SP Classes" />
+                            <h2>SP Classes</h2>
+                            <p>सीखें बेहतर, आगे बढ़ें बेहतर</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="regName" placeholder="Enter your full name" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="regEmail" placeholder="Enter your email" />
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <input type="tel" id="regMobile" placeholder="Enter mobile number" />
+                        </div>
+                        <button class="btn-auth" id="registerBtn"><i class="fas fa-user-plus"></i> Register</button>
+                        <div class="auth-switch">
+                            Already have an account? <a id="gotoLogin">Login</a>
+                        </div>
+                        <div class="auth-switch mt-8" style="font-size:11px;color:var(--text-light);">
+                            <i class="fas fa-lock"></i> All features only $1 USDT BEP20
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== PAGE: LOGIN ===== -->
+            <div class="page" id="pageLogin">
+                <div class="auth-page">
+                    <div class="auth-box">
+                        <div class="auth-logo">
+                            <img src="https://i.postimg.cc/HkyGg7v8/file-0000000033ac8208bfb3de45949cc4c1.png" alt="SP Classes" />
+                            <h2>Welcome Back</h2>
+                            <p>Login to continue learning</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Email (User ID)</label>
+                            <input type="email" id="loginEmail" placeholder="Enter your email" />
+                        </div>
+                        <div class="form-group">
+                            <label>Password (Mobile Number)</label>
+                            <input type="password" id="loginPassword" placeholder="Enter mobile number" />
+                        </div>
+                        <button class="btn-auth" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+                        <div class="auth-switch">
+                            Don't have an account? <a id="gotoRegister">Register</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== PAGE: HOME ===== -->
+            <div class="page" id="pageHome">
+                <!-- Welcome -->
+                <div style="display:flex;justify-content:space-between;align-items:center;margin:4px 0 8px;">
+                    <div>
+                        <p style="font-size:12px;color:var(--text-secondary);">Welcome back,</p>
+                        <h2 style="font-size:18px;font-weight:800;color:var(--text);" id="welcomeName">Student 👋</h2>
+                    </div>
+                    <span class="guest-badge" style="font-size:10px;background:var(--primary-bg);color:var(--primary);padding:2px 12px;border-radius:20px;font-weight:600;border:1px solid var(--border);" id="userBadge">Guest</span>
+                </div>
+
+                <!-- SLIDER -->
+                <div class="slider-container" id="sliderContainer">
+                    <div class="slider-track" id="sliderTrack"></div>
+                    <div class="slider-dots" id="sliderDots"></div>
+                </div>
+
+                <!-- AI Guide -->
+                <div class="ai-guide-box">
+                    <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="ai-text">
+                        <div class="name">
+                            Gemini AI Guide
+                            <span class="badge">BETA</span>
+                        </div>
+                        <div class="message" id="aiMessage">Namaste! How can I help you learn today? 🚀</div>
+                    </div>
+                    <button class="ai-voice-btn" id="voiceBtn"><i class="fas fa-microphone"></i></button>
+                </div>
+
+                <!-- Payment Status Banner -->
+                <div id="paymentBanner" style="background:var(--warning);color:#fff;padding:8px 14px;border-radius:var(--radius-sm);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                    <span><i class="fas fa-lock"></i> Pay $1 USDT to unlock all content</span>
+                    <button id="gotoPaymentBtn" style="background:#fff;border:none;color:var(--warning);padding:4px 14px;border-radius:20px;font-weight:700;font-size:12px;cursor:pointer;">Pay Now</button>
+                </div>
+
+                <!-- Features -->
+                <div class="section-title">Features</div>
+                <div class="feature-grid">
+                    <div class="feature-item" data-feature="live"><div class="fi-icon purple"><i class="fas fa-video"></i></div><div class="fi-label">Live Classes</div></div>
+                    <div class="feature-item" data-feature="courses"><div class="fi-icon blue"><i class="fas fa-book-open"></i></div><div class="fi-label">Courses</div></div>
+                    <div class="feature-item" data-feature="notes"><div class="fi-icon green"><i class="fas fa-file-pdf"></i></div><div class="fi-label">Notes</div></div>
+                    <div class="feature-item" data-feature="test"><div class="fi-icon orange"><i class="fas fa-clipboard-list"></i></div><div class="fi-label">Test Series</div></div>
+                    <div class="feature-item" data-feature="practice"><div class="fi-icon pink"><i class="fas fa-puzzle-piece"></i></div><div class="fi-label">Practice</div></div>
+                    <div class="feature-item" data-feature="video"><div class="fi-icon cyan"><i class="fas fa-play-circle"></i></div><div class="fi-label">Video Lectures</div></div>
+                    <div class="feature-item" data-feature="books"><div class="fi-icon red"><i class="fas fa-book"></i></div><div class="fi-label">Books</div></div>
+                    <div class="feature-item" data-feature="progress"><div class="fi-icon indigo"><i class="fas fa-chart-line"></i></div><div class="fi-label">Progress</div></div>
+                </div>
+
+                <!-- Video Lectures -->
+                <div class="section-title">
+                    Video Lectures
+                    <span class="see-all" id="viewAllVideos">See All →</span>
+                </div>
+                <div id="videoGridContainer" class="locked-overlay">
+                    <div class="video-grid" id="videoGrid"></div>
+                </div>
+
+                <!-- Courses -->
+                <div class="section-title">Top Courses</div>
+                <div id="topCourses">
+                    <div class="course-card"><div class="cc-badge">📐</div><div class="cc-info"><h4>Class 10th - Math</h4><p>Linear Equations</p></div><div class="cc-progress"><div class="bar"><div class="fill" style="width:60%"></div></div><span class="percent">60%</span></div></div>
+                    <div class="course-card"><div class="cc-badge">⚛️</div><div class="cc-info"><h4>Class 12th Science</h4><p>Physics Notes (Hindi)</p></div><div class="cc-progress"><span class="lectures">70+ Lectures</span></div></div>
+                    <div class="course-card"><div class="cc-badge">🧪</div><div class="cc-info"><h4>Class 10th Chemistry</h4><p>Chemical Reactions</p></div><div class="cc-progress"><span class="lectures">70+ Lectures</span></div></div>
+                </div>
+                <div style="height:12px;"></div>
+            </div>
+
+            <!-- ===== PAGE: PAYMENT ===== -->
+            <div class="page" id="pagePayment">
+                <div class="section-title" style="margin-top:12px;">
+                    <button class="back-btn" data-back="home" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text);"><i class="fas fa-arrow-left"></i></button>
+                    Payment
+                </div>
+                <div class="payment-box">
+                    <h3 style="color:var(--text);">💰 Pay $1 USDT BEP20</h3>
+                    <p style="font-size:13px;color:var(--text-secondary);">Scan QR code to pay & unlock all features</p>
+                    <div class="qr-code">
+                        <img src="https://i.postimg.cc/fLcbhtnq/Screenshot-2026-0622-152712.jpg" alt="USDT QR Code" />
+                    </div>
+                    <div class="amount">$1.00 USDT</div>
+                    <div class="address">
+                        <strong>BEP20 Address:</strong><br />
+                        0x742d35Cc6634C0532925a3b844Bc454e4438f44e
+                    </div>
+                    <div id="paymentStatus">
+                        <span class="status-badge pending" id="payStatusBadge"><i class="fas fa-clock"></i> Pending</span>
+                    </div>
+                    <button class="btn-primary" id="checkPaymentBtn" style="width:100%;margin-top:10px;padding:12px;border:none;border-radius:var(--radius-sm);background:var(--gradient);color:#fff;font-weight:700;font-size:15px;cursor:pointer;">
+                        <i class="fas fa-sync"></i> Check Payment Status
+                    </button>
+                    <p style="font-size:11px;color:var(--text-light);margin-top:8px;">Payment will be approved by admin within 24 hours</p>
+                </div>
+                <div style="height:12px;"></div>
+            </div>
+
+            <!-- ===== PAGE: ADMIN ===== -->
+            <div class="page" id="pageAdmin">
+                <div class="section-title" style="margin-top:12px;">
+                    <button class="back-btn" data-back="home" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text);"><i class="fas fa-arrow-left"></i></button>
+                    Admin Panel
+                </div>
+
+                <div class="admin-stats">
+                    <div class="stat-card"><div class="num" id="adminTotalUsers">0</div><div class="label">Total Users</div></div>
+                    <div class="stat-card"><div class="num" id="adminTotalPayments">0</div><div class="label">Payments</div></div>
+                    <div class="stat-card"><div class="num" id="adminApprovedPayments">0</div><div class="label">Approved</div></div>
+                    <div class="stat-card"><div class="num" id="adminPendingPayments">0</div><div class="label">Pending</div></div>
+                </div>
+
+                <div class="admin-tabs">
+                    <button class="active" data-admin-tab="payments">Payments</button>
+                    <button data-admin-tab="users">Users</button>
+                    <button data-admin-tab="videos">Videos</button>
+                </div>
+
+                <div id="adminPaymentsTab">
+                    <div class="admin-list" id="adminPaymentList"></div>
+                </div>
+
+                <div id="adminUsersTab" class="hidden">
+                    <div class="admin-list" id="adminUserList"></div>
+                </div>
+
+                <div id="adminVideosTab" class="hidden">
+                    <div class="admin-list" id="adminVideoList"></div>
+                    <div style="margin-top:12px;background:var(--card);border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border);">
+                        <h4 style="font-size:14px;margin-bottom:8px;"><i class="fas fa-plus-circle"></i> Add Video</h4>
+                        <div class="form-group"><input type="text" id="adminVideoTitle" placeholder="Video Title" style="width:100%;padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);" /></div>
+                        <div class="form-group"><input type="text" id="adminVideoLink" placeholder="YouTube Link" style="width:100%;padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);" /></div>
+                        <div class="form-group"><input type="text" id="adminVideoThumb" placeholder="Thumbnail URL" style="width:100%;padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);" /></div>
+                        <button class="btn-primary" id="adminAddVideoBtn" style="padding:8px 20px;border:none;border-radius:var(--radius-sm);background:var(--gradient);color:#fff;font-weight:700;cursor:pointer;">Add Video</button>
+                    </div>
+                </div>
+                <div style="height:12px;"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav" id="bottomNav" style="display:none;">
+            <button class="nav-item active" data-tab="home"><i class="fas fa-home"></i><span>Home</span></button>
+            <button class="nav-item" data-tab="payment"><i class="fas fa-wallet"></i><span>Pay</span></button>
+            <button class="nav-item" data-tab="admin"><i class="fas fa-user-shield"></i><span>Admin</span></button>
+        </nav>
+
+        <!-- Video Modal -->
+        <div class="video-modal" id="videoModal">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <h3 id="videoModalTitle">Video Lecture</h3>
+                    <button class="close-btn" id="closeVideoModal"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="videoIframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast -->
+        <div class="toast" id="toast"></div>
     </div>
 
-    <button id="getSignalBtn" class="action-btn" onclick="generateLiveSignal()">🚀 GET SIGNAL</button>
+    <script>
+        // ============================================================
+        //  SP CLASSES - FULL APP LOGIC
+        // ============================================================
+        (function() {
+            'use strict';
 
-    <div id="result" style="display:none;">
-      <div id="signalBox" class="signal-box">
-        <div id="signalText" style="font-size: 1.8em; letter-spacing: 2px;">ANALYZING...</div>
-        <div id="probText" style="font-size: 0.85em; margin-top: 5px; opacity: 0.9;">PROBABILITY: --%</div>
-      </div>
+            // ----- DATA -----
+            const SLIDES = [{
+                img: 'https://picsum.photos/seed/edu1/800/400',
+                line1: '📚 Knowledge is Power',
+                line2: 'Learn something new every day'
+            }, {
+                img: 'https://picsum.photos/seed/edu2/800/400',
+                line1: '🎯 Dream Big, Achieve More',
+                line2: 'Your future starts with education'
+            }, {
+                img: 'https://picsum.photos/seed/edu3/800/400',
+                line1: '🧠 Smart Learning',
+                line2: 'Learn anytime, anywhere'
+            }, {
+                img: 'https://picsum.photos/seed/edu4/800/400',
+                line1: '🌟 Be the Best Version of You',
+                line2: 'Education is the key to success'
+            }, {
+                img: 'https://picsum.photos/seed/edu5/800/400',
+                line1: '📖 Read, Learn, Grow',
+                line2: 'Every day is a learning opportunity'
+            }, {
+                img: 'https://picsum.photos/seed/edu6/800/400',
+                line1: '🚀 Reach for the Stars',
+                line2: 'With hard work and dedication'
+            }, {
+                img: 'https://picsum.photos/seed/edu7/800/400',
+                line1: '💡 Knowledge is Light',
+                line2: 'Illuminate your mind with learning'
+            }, {
+                img: 'https://picsum.photos/seed/edu8/800/400',
+                line1: '🌍 Global Learning',
+                line2: 'Connect with knowledge worldwide'
+            }, {
+                img: 'https://picsum.photos/seed/edu9/800/400',
+                line1: '🏆 Excellence in Education',
+                line2: 'Strive for the best'
+            }, {
+                img: 'https://picsum.photos/seed/edu10/800/400',
+                line1: '🌈 Bright Future Ahead',
+                line2: 'Education builds your tomorrow'
+            }];
 
-      <div class="timer-container">
-        ⏳ REMAINING: <span id="countdown">00:00</span>
-      </div>
+            const DEFAULT_VIDEOS = [{
+                id: 1,
+                title: 'Class 10 Math - Linear Equations',
+                link: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                thumb: 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+                duration: '15:30'
+            }, {
+                id: 2,
+                title: 'Class 12 Physics - Newton\'s Laws',
+                link: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                thumb: 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+                duration: '22:15'
+            }, {
+                id: 3,
+                title: 'Chemistry - Acids & Bases',
+                link: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                thumb: 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+                duration: '18:45'
+            }, {
+                id: 4,
+                title: 'Biology - Cell Division',
+                link: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                thumb: 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+                duration: '20:10'
+            }];
 
-      <div class="price" id="price">Live Price: Fetching...</div>
-      
-      <div class="chart-container">
-        <canvas id="chart" height="280"></canvas>
-      </div>
-    </div>
+            // ----- STATE -----
+            let currentPage = 'register';
+            let currentUser = null;
+            let users = JSON.parse(localStorage.getItem('sp_users') || '[]');
+            let payments = JSON.parse(localStorage.getItem('sp_payments') || '[]');
+            let videos = JSON.parse(localStorage.getItem('sp_videos') || JSON.stringify(DEFAULT_VIDEOS));
+            let sliderIndex = 0;
+            let sliderInterval = null;
+            let isVoiceOn = false;
+            let darkMode = localStorage.getItem('sp_dark') === 'true';
+            let language = localStorage.getItem('sp_lang') || 'en';
 
-    <footer>
-      Educational Purpose Only • Real-time Mock Live Data Sync
-    </footer>
-  </div>
+            // ----- DOM REFS -----
+            const pages = {
+                register: document.getElementById('pageRegister'),
+                login: document.getElementById('pageLogin'),
+                home: document.getElementById('pageHome'),
+                payment: document.getElementById('pagePayment'),
+                admin: document.getElementById('pageAdmin'),
+            };
+            const navItems = document.querySelectorAll('.nav-item');
+            const toastEl = document.getElementById('toast');
+            const langToggle = document.getElementById('langToggle');
+            const sliderTrack = document.getElementById('sliderTrack');
+            const sliderDots = document.getElementById('sliderDots');
+            const videoGrid = document.getElementById('videoGrid');
+            const videoModal = document.getElementById('videoModal');
+            const videoIframe = document.getElementById('videoIframe');
+            const videoModalTitle = document.getElementById('videoModalTitle');
+            const closeVideoBtn = document.getElementById('closeVideoModal');
+            const voiceBtn = document.getElementById('voiceBtn');
+            const aiMessage = document.getElementById('aiMessage');
+            const welcomeName = document.getElementById('welcomeName');
+            const userBadge = document.getElementById('userBadge');
+            const paymentBanner = document.getElementById('paymentBanner');
+            const payStatusBadge = document.getElementById('payStatusBadge');
+            const bottomNav = document.getElementById('bottomNav');
 
-  <script>
-    let chartInstance = null;
-    let countdownInterval = null;
-    let selectedTimeframe = 1;
-    let currentPriceGlobal = 0;
-    let candleDataList = [];
+            // ----- HELPERS -----
+            function t(key) {
+                const dict = {
+                    en: {
+                        welcome: 'Welcome back,',
+                        student: 'Student 👋',
+                        guest: 'Guest',
+                        payNow: 'Pay Now',
+                        pending: 'Pending',
+                        approved: 'Approved',
+                        rejected: 'Rejected',
+                        register: 'Register',
+                        login: 'Login',
+                        home: 'Home',
+                        pay: 'Pay',
+                        admin: 'Admin'
+                    },
+                    hi: {
+                        welcome: 'वापसी पर स्वागत है,',
+                        student: 'छात्र 👋',
+                        guest: 'अतिथि',
+                        payNow: 'अभी भुगतान करें',
+                        pending: 'लंबित',
+                        approved: 'स्वीकृत',
+                        rejected: 'अस्वीकृत',
+                        register: 'पंजीकरण',
+                        login: 'लॉगिन',
+                        home: 'होम',
+                        pay: 'भुगतान',
+                        admin: 'प्रशासक'
+                    }
+                };
+                const lang = language === 'hi' ? 'hi' : 'en';
+                return dict[lang][key] || key;
+            }
 
-    const assetConfig = {
-      "Crypto_IDX": { base: 3115.20, digits: 2 },
-      "Bitcoin": { base: 67800.00, digits: 2 },
-      "Bitcoin_Cash": { base: 435.20, digits: 2 },
-      "Ethereum": { base: 3750.00, digits: 2 },
-      "Pancake_Swap": { base: 2.75, digits: 3 },
-      "Solana": { base: 162.40, digits: 2 },
-      "Toncoin": { base: 7.15, digits: 3 },
-      "Uniswap": { base: 9.30, digits: 3 },
-      "Aave": { base: 92.80, digits: 2 },
-      "AUD_CAD": { base: 0.9112, digits: 4 },
-      "AUD_USD": { base: 0.6645, digits: 4 },
-      "CHF_JPY": { base: 173.25, digits: 2 },
-      "EUR_CAD": { base: 1.4830, digits: 4 },
-      "EUR_GBP": { base: 0.8515, digits: 4 },
-      "EUR_USD": { base: 1.0848, digits: 4 },
-      "GBP_CHF": { base: 1.1410, digits: 4 },
-      "GBP_JPY": { base: 198.40, digits: 2 },
-      "GBP_NZD": { base: 2.0630, digits: 4 },
-      "GBP_USD": { base: 1.2710, digits: 4 },
-      "NZD_USD": { base: 0.6142, digits: 4 },
-      "USD_CAD": { base: 1.3670, digits: 4 },
-      "USD_JPY": { base: 156.25, digits: 2 }
-    };
+            function showToast(msg) {
+                toastEl.textContent = msg;
+                toastEl.classList.add('show');
+                clearTimeout(toastEl._timer);
+                toastEl._timer = setTimeout(() => toastEl.classList.remove('show'), 2500);
+            }
 
-    window.onload = function() {
-      initCandleData();
-      setInterval(updateLiveTick, 1500); 
-    };
+            function navigateTo(page, data) {
+                Object.keys(pages).forEach(k => pages[k].classList.remove('active'));
+                if (pages[page]) pages[page].classList.add('active');
+                currentPage = page;
+                document.getElementById('mainContent').scrollTop = 0;
+                if (page === 'home' || page === 'payment' || page === 'admin') {
+                    bottomNav.style.display = 'flex';
+                } else {
+                    bottomNav.style.display = 'none';
+                }
+                // Update nav active
+                navItems.forEach(item => {
+                    item.classList.toggle('active', item.dataset.tab === page);
+                });
+                // Render content
+                if (page === 'home') renderHome();
+                if (page === 'payment') renderPayment();
+                if (page === 'admin') renderAdmin();
+            }
 
-    function changeAsset() {
-      initCandleData();
-      if(chartInstance) renderCandleChart();
-    }
+            // ----- SLIDER -----
+            function renderSlider() {
+                sliderTrack.innerHTML = '';
+                SLIDES.forEach((s, i) => {
+                    const div = document.createElement('div');
+                    div.className = 'slider-slide';
+                    div.innerHTML = `
+                <img src="${s.img}" alt="Slide ${i+1}" loading="lazy" />
+                <div class="slide-overlay">
+                  <div class="line1">${s.line1}</div>
+                  <div class="line2">${s.line2}</div>
+                </div>
+              `;
+                    sliderTrack.appendChild(div);
+                });
+                sliderDots.innerHTML = '';
+                SLIDES.forEach((_, i) => {
+                    const dot = document.createElement('span');
+                    dot.className = 'dot' + (i === 0 ? ' active' : '');
+                    dot.dataset.index = i;
+                    dot.addEventListener('click', () => goToSlide(i));
+                    sliderDots.appendChild(dot);
+                });
+                goToSlide(0);
+                startSlider();
+            }
 
-    function initCandleData() {
-      const asset = document.getElementById("asset").value;
-      const config = assetConfig[asset] || { base: 100, digits: 2 };
-      let currentPrice = config.base;
-      candleDataList = [];
+            function goToSlide(index) {
+                sliderIndex = index;
+                sliderTrack.style.transform = `translateX(-${index * 100}%)`;
+                document.querySelectorAll('.slider-dots .dot').forEach((d, i) => {
+                    d.classList.toggle('active', i === index);
+                });
+            }
 
-      for (let i = 0; i < 20; i++) {
-        let open = currentPrice + (Math.random() - 0.5) * (config.base * 0.002);
-        let close = open + (Math.random() - 0.5) * (config.base * 0.002);
-        let high = Math.max(open, close) + Math.random() * (config.base * 0.001);
-        let low = Math.min(open, close) - Math.random() * (config.base * 0.001);
-        
-        candleDataList.push({ open, high, low, close });
-        currentPrice = close;
-      }
-      currentPriceGlobal = currentPrice;
-      updatePriceDisplay(config.digits);
-    }
+            function startSlider() {
+                clearInterval(sliderInterval);
+                sliderInterval = setInterval(() => {
+                    goToSlide((sliderIndex + 1) % SLIDES.length);
+                }, 4000);
+            }
 
-    function updateLiveTick() {
-      const asset = document.getElementById("asset").value;
-      const config = assetConfig[asset] || { base: 100, digits: 2 };
-      
-      let lastCandle = candleDataList[candleDataList.length - 1];
-      let priceChange = (Math.random() - 0.5) * (config.base * 0.0005);
-      
-      lastCandle.close += priceChange;
-      if(lastCandle.close > lastCandle.high) lastCandle.high = lastCandle.close;
-      if(lastCandle.close < lastCandle.low) lastCandle.low = lastCandle.close;
-      
-      currentPriceGlobal = lastCandle.close;
-      updatePriceDisplay(config.digits);
+            // ----- VIDEOS -----
+            function renderVideos() {
+                videoGrid.innerHTML = '';
+                const list = videos || [];
+                if (list.length === 0) {
+                    videoGrid.innerHTML =
+                        '<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text-light);">No videos yet</div>';
+                    return;
+                }
+                list.forEach(v => {
+                    const card = document.createElement('div');
+                    card.className = 'video-card';
+                    card.innerHTML = `
+                <div class="thumbnail">
+                  <img src="${v.thumb || 'https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg'}" alt="${v.title}" loading="lazy" />
+                  <div class="play-btn"><i class="fas fa-play"></i></div>
+                </div>
+                <div class="video-info">
+                  <h4>${v.title}</h4>
+                  <div class="meta">
+                    <span>${v.duration || '10:00'}</span>
+                    <span class="duration">HD</span>
+                  </div>
+                </div>
+              `;
+                    card.addEventListener('click', () => openVideo(v));
+                    videoGrid.appendChild(card);
+                });
+            }
 
-      if (chartInstance && document.getElementById("result").style.display === "block") {
-        renderCandleChart();
-      }
-    }
+            function openVideo(video) {
+                if (!isPaymentApproved()) {
+                    showToast('🔒 Please pay $1 USDT to access videos');
+                    navigateTo('payment');
+                    return;
+                }
+                videoModalTitle.textContent = video.title;
+                videoIframe.src = video.link + '?autoplay=1&rel=0';
+                videoModal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
 
-    function updatePriceDisplay(digits) {
-      document.getElementById("price").innerHTML = `Live Price: <b style="color:#ffd700">${currentPriceGlobal.toFixed(digits)}</b>`;
-    }
+            function closeVideo() {
+                videoModal.classList.remove('open');
+                videoIframe.src = '';
+                document.body.style.overflow = '';
+            }
 
-    function setTimeframe(mins) {
-      selectedTimeframe = mins;
-      document.getElementById("boardSubtitle").textContent = `${mins} Minute Timeframe | Real Live Candlesticks`;
-      const buttons = document.querySelectorAll(".time-btn");
-      buttons.forEach(btn => btn.classList.remove("active"));
-      document.getElementById("btn-" + mins).classList.add("active");
-    }
+            // ----- PAYMENT -----
+            function isPaymentApproved() {
+                const p = payments.find(p => p.userEmail === currentUser?.email);
+                return p && p.status === 'approved';
+            }
 
-    // बोलने वाला फंक्शन (Voice Alert)
-    function speakSignal(text) {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); // पुराना वॉइस क्लियर करें
-        let msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'en-US'; 
-        msg.rate = 1.0; 
-        window.speechSynthesis.speak(msg);
-      }
-    }
+            function renderPayment() {
+                const p = payments.find(p => p.userEmail === currentUser?.email);
+                if (p) {
+                    const statusMap = { pending: 'Pending', approved: 'Approved ✅', rejected: 'Rejected ❌' };
+                    payStatusBadge.textContent = statusMap[p.status] || 'Pending';
+                    payStatusBadge.className = 'status-badge ' + p.status;
+                } else {
+                    payStatusBadge.textContent = 'Not Paid';
+                    payStatusBadge.className = 'status-badge pending';
+                }
+                // Update banner
+                if (isPaymentApproved()) {
+                    paymentBanner.style.display = 'none';
+                } else {
+                    paymentBanner.style.display = 'flex';
+                }
+            }
 
-    function generateLiveSignal() {
-      document.getElementById("result").style.display = "block";
-      document.getElementById("getSignalBtn").disabled = true;
+            function checkPayment() {
+                if (!currentUser) { showToast('Please login first'); return; }
+                const p = payments.find(p => p.userEmail === currentUser.email);
+                if (p) {
+                    const statusMap = { pending: '⏳ Pending', approved: '✅ Approved', rejected: '❌ Rejected' };
+                    showToast('Payment status: ' + statusMap[p.status] || 'Pending');
+                    renderPayment();
+                } else {
+                    showToast('No payment found. Please pay $1 USDT');
+                }
+            }
 
-      let lastCandle = candleDataList[candleDataList.length - 1];
-      const isBuy = lastCandle.close < lastCandle.open; 
-      const prob = Math.floor(Math.random() * 12) + 83;
+            // ----- ADMIN -----
+            function renderAdmin() {
+                document.getElementById('adminTotalUsers').textContent = users.length;
+                document.getElementById('adminTotalPayments').textContent = payments.length;
+                document.getElementById('adminApprovedPayments').textContent = payments.filter(p => p.status === 'approved')
+                    .length;
+                document.getElementById('adminPendingPayments').textContent = payments.filter(p => p.status === 'pending')
+                    .length;
+                renderAdminPayments();
+                renderAdminUsers();
+                renderAdminVideos();
+            }
 
-      const signalBox = document.getElementById("signalBox");
-      const signalText = document.getElementById("signalText");
-      const probText = document.getElementById("probText");
+            function renderAdminPayments() {
+                const container = document.getElementById('adminPaymentList');
+                container.innerHTML = '';
+                if (payments.length === 0) {
+                    container.innerHTML =
+                    '<div style="text-align:center;padding:20px;color:var(--text-light);">No payments</div>';
+                    return;
+                }
+                payments.forEach((p, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'admin-payment-item';
+                    div.innerHTML = `
+                <div class="info">
+                  <div class="name">${p.userName || 'User'}</div>
+                  <div class="email">${p.userEmail}</div>
+                  <span class="status ${p.status}">${p.status.toUpperCase()}</span>
+                </div>
+                <div class="actions">
+                  ${p.status === 'pending' ? `
+                    <button class="approve" data-idx="${idx}"><i class="fas fa-check"></i> Approve</button>
+                    <button class="reject" data-idx="${idx}"><i class="fas fa-times"></i> Reject</button>
+                  ` : `
+                    <span style="font-size:11px;color:var(--text-light);">${p.status === 'approved' ? '✅ Done' : '❌ Rejected'}</span>
+                  `}
+                </div>
+              `;
+                    container.appendChild(div);
+                });
+                // Bind approve/reject
+                container.querySelectorAll('.approve').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.idx);
+                        payments[idx].status = 'approved';
+                        localStorage.setItem('sp_payments', JSON.stringify(payments));
+                        renderAdmin();
+                        showToast('✅ Payment approved!');
+                    });
+                });
+                container.querySelectorAll('.reject').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.idx);
+                        payments[idx].status = 'rejected';
+                        localStorage.setItem('sp_payments', JSON.stringify(payments));
+                        renderAdmin();
+                        showToast('❌ Payment rejected');
+                    });
+                });
+            }
 
-      if (isBuy) {
-        signalBox.className = "signal-box buy";
-        signalText.textContent = `CALL / BUY ▲ (${selectedTimeframe} MIN)`;
-        speakSignal("Call! Buy Now!"); // आवाज़ आएगी
-      } else {
-        signalBox.className = "signal-box sell";
-        signalText.textContent = `PUT / SELL ▼ (${selectedTimeframe} MIN)`;
-        speakSignal("Put! Sell Now!"); // आवाज़ आएगी
-      }
-      
-      probText.textContent = `AI ACCURACY: ${prob}%`;
-      
-      renderCandleChart();
-      startTimer(selectedTimeframe);
-    }
+            function renderAdminUsers() {
+                const container = document.getElementById('adminUserList');
+                container.innerHTML = '';
+                if (users.length === 0) {
+                    container.innerHTML =
+                    '<div style="text-align:center;padding:20px;color:var(--text-light);">No users</div>';
+                    return;
+                }
+                users.forEach(u => {
+                    const div = document.createElement('div');
+                    div.className = 'admin-payment-item';
+                    div.innerHTML = `
+                <div class="info">
+                  <div class="name">${u.name}</div>
+                  <div class="email">${u.email} • ${u.mobile}</div>
+                </div>
+                <span style="font-size:11px;color:var(--text-light);">Registered</span>
+              `;
+                    container.appendChild(div);
+                });
+            }
 
-    function startTimer(minutes) {
-      if (countdownInterval) clearInterval(countdownInterval);
-      let totalSeconds = (minutes * 60) - 1;
-      const countdownEl = document.getElementById("countdown");
+            function renderAdminVideos() {
+                const container = document.getElementById('adminVideoList');
+                container.innerHTML = '';
+                const list = videos || [];
+                if (list.length === 0) {
+                    container.innerHTML =
+                    '<div style="text-align:center;padding:20px;color:var(--text-light);">No videos</div>';
+                    return;
+                }
+                list.forEach((v, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'admin-payment-item';
+                    div.innerHTML = `
+                <div class="info">
+                  <div class="name">${v.title}</div>
+                  <div class="email" style="font-size:11px;">${v.link}</div>
+                </div>
+                <button style="background:var(--danger);color:#fff;border:none;padding:4px 12px;border-radius:var(--radius-sm);cursor:pointer;font-weight:600;" data-vidx="${idx}">
+                  <i class="fas fa-trash"></i>
+                </button>
+              `;
+                    container.appendChild(div);
+                });
+                container.querySelectorAll('button[data-vidx]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.vidx);
+                        videos.splice(idx, 1);
+                        localStorage.setItem('sp_videos', JSON.stringify(videos));
+                        renderAdmin();
+                        renderVideos();
+                        showToast('🗑️ Video deleted');
+                    });
+                });
+            }
 
-      countdownInterval = setInterval(() => {
-        const mins = Math.floor(totalSeconds / 60);
-        const secs = totalSeconds % 60;
-        countdownEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        
-        totalSeconds--;
-        if (totalSeconds < 0) {
-          clearInterval(countdownInterval);
-          countdownEl.textContent = "00:00 - EXPIRED";
-          document.getElementById("getSignalBtn").disabled = false;
-        }
-      }, 1000);
-    }
+            // ----- AUTH -----
+            function register() {
+                const name = document.getElementById('regName').value.trim();
+                const email = document.getElementById('regEmail').value.trim();
+                const mobile = document.getElementById('regMobile').value.trim();
+                if (!name || !email || !mobile) { showToast('Please fill all fields'); return; }
+                if (users.find(u => u.email === email)) { showToast('Email already registered'); return; }
+                users.push({ name, email, mobile, registeredAt: new Date().toISOString() });
+                localStorage.setItem('sp_users', JSON.stringify(users));
+                currentUser = { name, email, mobile };
+                showToast('✅ Registration successful! Please login.');
+                navigateTo('login');
+            }
 
-    // एडवांस्ड ज़ूम्ड कैंडलस्टिक रेंडरर इंजन (प्राइस फ़िक्स)
-    function renderCandleChart() {
-      const ctx = document.getElementById("chart").getContext('2d');
-      if (chartInstance) chartInstance.destroy();
+            function login() {
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = document.getElementById('loginPassword').value.trim();
+                if (!email || !password) { showToast('Please fill all fields'); return; }
+                const user = users.find(u => u.email === email && u.mobile === password);
+                if (!user) { showToast('❌ Invalid credentials'); return; }
+                currentUser = user;
+                showToast('✅ Welcome ' + user.name + '!');
+                navigateTo('home');
+            }
 
-      const labels = Array.from({length: candleDataList.length}, (_, i) => i + 1);
-      
-      // फ्लोटिंग बार्स मैकेनिज्म
-      const datasetData = candleDataList.map(c => [c.open, c.close]);
-      const backgroundColors = candleDataList.map(c => c.close >= c.open ? '#00ff88' : '#ff4444');
+            function logout() {
+                currentUser = null;
+                navigateTo('login');
+            }
 
-      // सभी वैल्यूज़ में से मिनिमम और मैक्सिमम ढूंढकर चार्ट ऑटो ज़ूम करना
-      const allValues = candleDataList.flatMap(c => [c.open, c.close, c.high, c.low]);
-      const minVal = Math.min(...allValues) * 0.9995;
-      const maxVal = Math.max(...allValues) * 1.0005;
+            // ----- HOME RENDER -----
+            function renderHome() {
+                if (currentUser) {
+                    welcomeName.textContent = currentUser.name + ' 👋';
+                    userBadge.textContent = currentUser.name.split(' ')[0] || 'User';
+                } else {
+                    welcomeName.textContent = 'Student 👋';
+                    userBadge.textContent = 'Guest';
+                }
+                renderVideos();
+                renderPayment();
+                // Lock videos if not paid
+                const container = document.getElementById('videoGridContainer');
+                if (!isPaymentApproved()) {
+                    container.classList.add('locked-overlay');
+                    // Show lock overlay
+                    let lock = container.querySelector('.lock-banner');
+                    if (!lock) {
+                        lock = document.createElement('div');
+                        lock.className = 'lock-banner';
+                        lock.innerHTML = '<i class="fas fa-lock"></i> Pay $1 USDT to unlock videos';
+                        container.prepend(lock);
+                    }
+                } else {
+                    container.classList.remove('locked-overlay');
+                    const lock = container.querySelector('.lock-banner');
+                    if (lock) lock.remove();
+                }
+            }
 
-      chartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: datasetData,
-            backgroundColor: backgroundColors,
-            barPercentage: 0.65
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            y: { 
-              grid: { color: '#1f1f3a' }, 
-              ticks: { color: '#aaa' },
-              min: minVal, // यहाँ से सुधरा (चार्ट अब ज़ूम रहेगा)
-              max: maxVal
-            },
-            x: { grid: { display: false }, ticks: { display: false } }
-          }
-        }
-      });
-    }
-  </script>
+            // ----- AI VOICE -----
+            function toggleVoice() {
+                isVoiceOn = !isVoiceOn;
+                voiceBtn.classList.toggle('active', isVoiceOn);
+                const msgs = [
+                    '🎤 Listening... Ask me anything!',
+                    '🔊 I\'m here to help you learn!',
+                    '📚 What subject would you like to study?',
+                    '💡 Let me explain that concept to you.',
+                    '🌟 Great question! Let\'s explore this together.'
+                ];
+                if (isVoiceOn) {
+                    aiMessage.textContent = '🎤 Listening... Speak your question.';
+                    // Simulate voice response after 3s
+                    clearTimeout(voiceBtn._voiceTimer);
+                    voiceBtn._voiceTimer = setTimeout(() => {
+                        if (isVoiceOn) {
+                            const msg = msgs[Math.floor(Math.random() * msgs.length)];
+                            aiMessage.textContent = msg;
+                            voiceBtn.classList.remove('active');
+                            isVoiceOn = false;
+                            showToast('🔊 AI response: ' + msg);
+                        }
+                    }, 3000 + Math.random() * 2000);
+                } else {
+                    aiMessage.textContent = 'Namaste! How can I help you learn today? 🚀';
+                    clearTimeout(voiceBtn._voiceTimer);
+                }
+            }
+
+            // ----- INIT -----
+            function init() {
+                // Render slider
+                renderSlider();
+
+                // Render videos
+                renderVideos();
+
+                // Check if user logged in
+                const savedUser = localStorage.getItem('sp_current_user');
+                if (savedUser) {
+                    try {
+                        currentUser = JSON.parse(savedUser);
+                        if (users.find(u => u.email === currentUser.email)) {
+                            navigateTo('home');
+                            return;
+                        }
+                    } catch (e) {}
+                }
+                navigateTo('register');
+
+                // ----- EVENTS -----
+
+                // Auth
+                document.getElementById('registerBtn').addEventListener('click', register);
+                document.getElementById('loginBtn').addEventListener('click', login);
+                document.getElementById('gotoLogin').addEventListener('click', () => navigateTo('login'));
+                document.getElementById('gotoRegister').addEventListener('click', () => navigateTo('register'));
+
+                // Enter key for auth
+                document.getElementById('regMobile').addEventListener('keydown', e => { if (e.key === 'Enter') register(); });
+                document.getElementById('loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+
+                // Nav
+                navItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        const tab = this.dataset.tab;
+                        if (tab === 'home') {
+                            if (!currentUser) { showToast('Please login first');
+                                navigateTo('login'); return; }
+                            navigateTo('home');
+                        } else if (tab === 'payment') {
+                            if (!currentUser) { showToast('Please login first');
+                                navigateTo('login'); return; }
+                            navigateTo('payment');
+                        } else if (tab === 'admin') {
+                            navigateTo('admin');
+                        }
+                    });
+                });
+
+                // Back buttons
+                document.querySelectorAll('.back-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const target = this.dataset.back;
+                        if (target === 'home') navigateTo('home');
+                        else if (target === 'login') navigateTo('login');
+                        else navigateTo('home');
+                    });
+                });
+
+                // Language
+                langToggle.addEventListener('click', function() {
+                    language = language === 'en' ? 'hi' : 'en';
+                    localStorage.setItem('sp_lang', language);
+                    this.textContent = language === 'en' ? 'हिंदी' : 'English';
+                    showToast('Language: ' + (language === 'en' ? 'English' : 'हिंदी'));
+                });
+
+                // Video modal
+                closeVideoBtn.addEventListener('click', closeVideo);
+                videoModal.addEventListener('click', function(e) {
+                    if (e.target === this) closeVideo();
+                });
+
+                // View all videos
+                document.getElementById('viewAllVideos').addEventListener('click', function() {
+                    if (!isPaymentApproved()) {
+                        showToast('🔒 Pay $1 USDT to access all videos');
+                        navigateTo('payment');
+                        return;
+                    }
+                    showToast('📺 Showing all ' + (videos || []).length + ' videos');
+                });
+
+                // Voice
+                voiceBtn.addEventListener('click', toggleVoice);
+
+                // Payment
+                document.getElementById('gotoPaymentBtn').addEventListener('click', () => {
+                    if (!currentUser) { showToast('Please login first');
+                        navigateTo('login'); return; }
+                    navigateTo('payment');
+                });
+                document.getElementById('checkPaymentBtn').addEventListener('click', checkPayment);
+
+                // Admin add video
+                document.getElementById('adminAddVideoBtn').addEventListener('click', function() {
+                    const title = document.getElementById('adminVideoTitle').value.trim();
+                    const link = document.getElementById('adminVideoLink').value.trim();
+                    const thumb = document.getElementById('adminVideoThumb').value.trim();
+                    if (!title || !link) { showToast('Please fill title and link'); return; }
+                    const video = {
+                        id: Date.now(),
+                        title,
+                        link: link.includes('embed') ? link : link.replace('watch?v=', 'embed/'),
+                        thumb: thumb || 'https://img.youtube.com/vi/' + link.split('v=')[1]?.substring(0, 11) +
+                            '/hqdefault.jpg' || 'https://picsum.photos/seed/vid' + Date.now() + '/320/180',
+                        duration: '15:00'
+                    };
+                    videos.push(video);
+                    localStorage.setItem('sp_videos', JSON.stringify(videos));
+                    renderAdmin();
+                    renderVideos();
+                    document.getElementById('adminVideoTitle').value = '';
+                    document.getElementById('adminVideoLink').value = '';
+                    document.getElementById('adminVideoThumb').value = '';
+                    showToast('✅ Video added!');
+                });
+
+                // Admin tabs
+                document.querySelectorAll('[data-admin-tab]').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('[data-admin-tab]').forEach(b => b.classList.remove(
+                        'active'));
+                        this.classList.add('active');
+                        const tab = this.dataset.adminTab;
+                        document.getElementById('adminPaymentsTab').classList.toggle('hidden', tab !==
+                            'payments');
+                        document.getElementById('adminUsersTab').classList.toggle('hidden', tab !== 'users');
+                        document.getElementById('adminVideosTab').classList.toggle('hidden', tab !== 'videos');
+                        if (tab === 'payments') renderAdminPayments();
+                        if (tab === 'users') renderAdminUsers();
+                        if (tab === 'videos') renderAdminVideos();
+                    });
+                });
+
+                // Feature clicks
+                document.querySelectorAll('.feature-item').forEach(el => {
+                    el.addEventListener('click', function() {
+                        const feat = this.dataset.feature;
+                        if (feat === 'video') {
+                            if (!isPaymentApproved()) {
+                                showToast('🔒 Pay $1 USDT to access videos');
+                                navigateTo('payment');
+                                return;
+                            }
+                            showToast('📺 Opening video lectures...');
+                        } else if (feat === 'courses' || feat === 'progress') {
+                            showToast('📚 ' + feat + ' coming soon!');
+                        } else if (feat === 'live') {
+                            showToast('🔴 Live classes coming soon!');
+                        } else if (feat === 'notes' || feat === 'test' || feat === 'practice' || feat === 'books') {
+                            showToast('📖 ' + feat + ' coming soon!');
+                        } else {
+                            showToast('✨ Feature coming soon!');
+                        }
+                    });
+                });
+
+                // Course card click
+                document.querySelectorAll('.course-card').forEach(el => {
+                    el.addEventListener('click', function() {
+                        if (!isPaymentApproved()) {
+                            showToast('🔒 Pay $1 USDT to access courses');
+                            navigateTo('payment');
+                            return;
+                        }
+                        showToast('📖 Opening ' + (this.querySelector('.cc-info h4')?.textContent || 'course'));
+                    });
+                });
+
+                // Notification
+                document.getElementById('notifBtn').addEventListener('click', function() {
+                    showToast('🔔 No new notifications');
+                });
+
+                // Update time
+                function updateTime() {
+                    const now = new Date();
+                    document.getElementById('statusTime').textContent =
+                        String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+                }
+                updateTime();
+                setInterval(updateTime, 30000);
+
+                // Auto-check payment on load
+                if (currentUser) {
+                    setTimeout(() => {
+                        renderPayment();
+                        renderHome();
+                    }, 200);
+                }
+
+                showToast('👋 Welcome to SP Classes!');
+            }
+
+            // Override navigateTo to save user
+            const origNavigate = navigateTo;
+            navigateTo = function(page, data) {
+                if (currentUser) {
+                    localStorage.setItem('sp_current_user', JSON.stringify(currentUser));
+                } else {
+                    localStorage.removeItem('sp_current_user');
+                }
+                origNavigate(page, data);
+            };
+
+            // Run
+            document.addEventListener('DOMContentLoaded', init);
+            if (document.readyState === 'complete' || document.readyState === 'interactive') init();
+
+            // Expose for debugging
+            window.__sp = { users, payments, videos, currentUser, navigateTo, showToast };
+
+        })();
+    </script>
+
 </body>
 </html>
